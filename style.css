@@ -1,0 +1,391 @@
+/* Eigenen Font definieren */
+@font-face {
+    font-family: 'DiamondGrotesk';
+    src: url('DiamondGrotesk-VF.ttf') format('truetype');
+}
+
+* {
+    box-sizing: border-box;
+    /* Roter Glow für ALLE Texte auf der Seite */
+    text-shadow: 0px 0px 2px rgba(115, 0, 0, 0.8), 
+                 0px 0px 5px rgba(255, 123, 0, 0.5);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* Hauptseite bleibt absolut statisch */
+    background-color: #ffffff;
+    font-family: 'DiamondGrotesk', sans-serif;
+    color: #000000;
+}
+
+/* p5 Canvas im Hintergrund */
+canvas {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    z-index: 1 !important;
+    pointer-events: none;
+}
+
+/* Haupt-Container als Bezugspunkt für alle freien Elemente */
+.page-container {
+    position: relative;
+    z-index: 10 !important;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* 1. FREI PLATZIERBARER HEADER (Titel & Untertitel) */
+.hero-section {
+    position: absolute;
+    top: 1vh;       /* Abstand von oben */
+    left: 1vw;      /* Abstand von links */
+    text-align: left;
+}
+
+h1 {
+    font-size: 6vw;
+    line-height: 0.9;   /* Verringert den vertikalen Platz des Titels */
+    margin: 0 0 -0.5vh 0; /* Zieht den Subtitle leicht nach oben */
+}
+
+.subtitle {
+    font-size: 2vw;
+    opacity: 0.8;
+    margin-top: 0;      /* Verhindert ungewollten Abstand nach oben */
+    margin-left: 4vw;
+}
+
+/* 2. FREI PLATZIERBARER PUBLIKATION-BUTTON */
+.publication-btn {
+    position: absolute;
+    top: 85vh;      /* FREI ANPASSBAR: Abstand von oben */
+    left: 5vw;     /* FREI ANPASSBAR: Abstand von links */
+    padding: 1.2vh 2vw;
+    font-size: 1vw;
+    font-family: 'DiamondGrotesk', sans-serif;
+    color: #000000;
+    background-color: #ffffff;
+    border: 0.15vw solid #000000;
+    border-radius: 2vw;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.3);
+    z-index: 20 !important;
+}
+
+.publication-btn:hover {
+    background-color: #ff0040;
+    color: #ffffff;
+    box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.8);
+    transform: scale(1.05);
+}
+
+/* 3. FREI PLATZIERBARES LINKES HERZ (Internet Designer) */
+.section-left {
+    position: absolute;
+    top: 48vh;      /* Abstand von oben */
+    right: 19vw;    /* Abstand von rechts */
+    display: flex;
+    align-items: center;
+    gap: 1.5vw;
+}
+
+/* 4. FREI PLATZIERBARES RECHTES HERZ (Web Echo) */
+.section-right {
+    position: absolute;
+    top: 62vh;      /* Abstand von oben */
+    right: 5vw;     /* Abstand von rechts */
+    display: flex;
+    flex-direction: row-reverse;
+    text-align: right;
+    align-items: center;
+    gap: 1.5vw;
+}
+
+/* Container für Herz + darin zentrierten Titel */
+.heart-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Herz-Grafik */
+.heart-small {
+    width: 15vw;
+    height: auto;
+    display: block;
+    pointer-events: auto;
+    user-select: none;
+    filter: drop-shadow(0px 0px 8px rgba(255, 0, 100, 0.4));
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+/* Titel exakt in der Mitte des Herzens */
+.heart-wrapper h2 {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    font-size: 1.1vw;
+    text-align: center;
+    width: 80%;
+    pointer-events: none;
+    line-height: 1.1;
+}
+
+.heart-wrapper:hover .heart-small {
+    filter: drop-shadow(0px 0px 25px rgba(255, 0, 0, 0.842)) 
+            drop-shadow(0px 0px 40px rgba(255, 16, 16, 0.8));
+    transform: scale(1.05);
+}
+
+.side-text {
+    max-width: 15vw;
+}
+
+.side-text p {
+    font-size: 0.8vw;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* 5. FREI FLIESSENDER HAUPTTEXT */
+.scrollable-text-box {
+    position: absolute;
+    top: 20vh;      /* Abstand von oben */
+    left: 10vw;     /* Abstand von links */
+    width: 35vw;    /* Maximale Breite des Textes */
+    font-size: 0.9vw;
+    line-height: 1.45;
+    text-align: left;
+    font-family: sans-serif;
+}
+
+.scrollable-text-box p {
+    margin: 0 0 1vh 0;
+}
+
+.scrollable-text-box p:nth-child(1) { margin-left: 0vw; }
+.scrollable-text-box p:nth-child(2) { margin-left: 3vw; }
+.scrollable-text-box p:nth-child(3) { margin-left: 6vw; }
+.scrollable-text-box p:nth-child(4) { margin-left: 2vw; }
+.scrollable-text-box p:nth-child(5) { margin-left: 10vw; }
+
+.scrollable-text-box p:last-child {
+    margin-bottom: 0;
+}
+
+/* =========================================================
+   6. RIESIGES HERZ OVERLAY
+   ========================================================= */
+
+.heart-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.heart-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Das Hintergrund-Herz */
+.giant-heart-bg {
+    position: absolute;
+    top: 0;
+    left: -20px;
+    width: 150vw;
+    height: 150vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0.01);
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.giant-heart-bg img {
+    width: 140vw;
+    height: auto;
+    filter: drop-shadow(0px 0px 35px rgba(255, 0, 50, 0.8));
+}
+
+.heart-modal.active .giant-heart-bg {
+    transform: scale(1);
+}
+
+/* Inhalt im Zentrum des riesigen Herzens */
+.modal-inner-content {
+    position: relative;
+    z-index: 3; /* Liegt über den frei schwebenden Bildern */
+    width: 35vw;
+    max-height: 60vh;
+    overflow-y: auto;
+    text-align: left;
+    color: #000000;
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.4s ease 0.25s, transform 0.4s ease 0.25s;
+}
+
+.modal-inner-content * {
+    text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.9), 
+                 0px 0px 8px rgba(255, 255, 255, 0.7);
+}
+
+.heart-modal.active .modal-inner-content {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Schließen-Button (X) */
+.close-btn {
+    position: absolute;
+    top: -1vh;
+    right: 0vw;
+    font-size: 3vw;
+    cursor: pointer;
+    line-height: 1;
+    color: #000000;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.modal-inner-content h1 {
+    font-size: 3.5vw;
+    margin-bottom: 2vh;
+}
+
+.headlineweb {
+    text-align: center;
+}
+
+.modal-inner-content p {
+    font-family: sans-serif;
+    font-size: 0.95vw;
+    line-height: 1.5;
+    margin-bottom: 3vh;
+}
+
+.modal-gallery {
+    display: flex;
+    justify-content: center;
+    gap: 1.5vw;
+    margin-bottom: 3vh;
+}
+
+.modal-gallery img {
+    width: 8vw;
+    height: auto;
+    border-radius: 0.5vw;
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.3));
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1vw;
+    margin-top: 2vh;
+}
+
+.download-plugin-btn,
+.action-plugin-btn {
+    display: inline-block;
+    padding: 1.2vh 2vw;
+    font-size: 0.9vw;
+    color: #ffffff;
+    background-color: #000000;
+    border: none;
+    border-radius: 2vw;
+    text-decoration: none;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 0 15px rgb(255, 255, 255);
+}
+
+.download-plugin-btn:hover,
+.action-plugin-btn:hover {
+    background-color: #ff0040;
+    transform: scale(1.05);
+}
+
+/* =========================================================
+   7. ABSOLUT PLATZIERTE BILDER RUND UM DAS MODAL
+   ========================================================= */
+
+.floating-img {
+    position: absolute;
+    z-index: 2; /* Unter dem Modal-Text, über dem riesigen Herz */
+    height: auto;
+    opacity: 0;
+    transform: scale(0.85); /* Startet leicht verkleinert, genau wie der Text */
+    /* Exakt dieselbe Timing-Animation wie beim Textfeld (.modal-inner-content) */
+    transition: opacity 0.4s ease 0.25s, transform 0.4s ease 0.25s;
+    pointer-events: none;
+    filter: drop-shadow(0px 0px 10px rgb(255, 255, 255));
+}
+
+/* Wenn das Modal geöffnet wird, ploppen die Bilder synchron zum Text auf */
+.heart-modal.active .floating-img {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Positionen der einzelnen Bilder: */
+
+/* 1. Bild (oben links) */
+.float-06 {
+    top: 7vh;
+    left: 3vw;
+    width: 40vw;
+}
+
+/* 2. Bild (unten rechts) */
+.float-07 {
+    top: 50vh;
+    right: 2vw;
+    width: 30vw;
+}
+
+/* 3. Bild (oben rechts) */
+.float-08 {
+    top: 10vh;
+    right: 1vw;
+    width: 25vw;
+}
+
+.float-01 {
+    top: 5vh;
+    left: 15vw;
+    width: 17vw;
+}
+
+/* 2. Bild (unten rechts) */
+.float-02 {
+    top: 60vh;
+    right: 15vw;
+    width: 15vw;
+}
+
+/* 3. Bild (oben rechts) */
+.float-03 {
+    top: 25vh;
+    right: 4vw;
+    width: 25vw;
+}
